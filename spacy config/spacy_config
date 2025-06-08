@@ -1,0 +1,140 @@
+#important
+#These parameters need to be check before run
+batch_size
+mixed_precision #if gpu available = true
+hidden_width
+maxout_pieces
+patience
+max_epochs
+max_steps
+eval_frequency
+buffer
+start
+stop
+#important
+
+
+[paths]
+train = "ner_data_train.spacy"
+dev = "ner_data_dev.spacy"
+vectors = null
+init_tok2vec = null
+
+[system]
+seed = 42
+gpu_allocator = "pytorch"
+
+[nlp]
+lang = "en"
+pipeline = ["transformer", "ner"]
+batch_size = 64
+tokenizer = {"@tokenizers": "spacy.Tokenizer.v1"}
+disabled = []
+before_creation = null
+after_creation = null
+after_pipeline_creation = null
+
+[components]
+
+[components.transformer]
+factory = "transformer"
+
+[components.transformer.model]
+@architectures = "spacy-transformers.TransformerModel.v3"
+name = "distilroberta-base"
+tokenizer_config = {"use_fast": true}
+transformer_config = {"output_attentions": false, "output_hidden_states": false}
+mixed_precision = false
+grad_scaler_config = {}
+
+[components.transformer.model.get_spans]
+@span_getters = "spacy-transformers.strided_spans.v1"
+window = 128
+stride = 96
+
+[components.ner]
+factory = "ner"
+scorer = {"@scorers": "spacy.ner_scorer.v1"}
+update_with_oracle_cut_size = 100
+
+[components.ner.model]
+@architectures = "spacy.TransitionBasedParser.v2"
+state_type = "ner"
+extra_state_tokens = false
+hidden_width = 128
+maxout_pieces = 3
+use_upper = true
+nO = null
+
+[components.ner.model.tok2vec]
+@architectures = "spacy-transformers.TransformerListener.v1"
+grad_factor = 1.0
+pooling = {"@layers": "reduce_mean.v1"}
+
+[corpora]
+
+[corpora.train]
+@readers = "spacy.Corpus.v1"
+path = ${paths.train}
+gold_preproc = false
+
+[corpora.dev]
+@readers = "spacy.Corpus.v1"
+path = ${paths.dev}
+gold_preproc = false
+
+[training]
+dev_corpus = "corpora.dev"
+train_corpus = "corpora.train"
+seed = ${system.seed}
+dropout = 0.1
+accumulate_gradient = 2
+patience = 3000
+max_epochs = 30
+max_steps = 0
+eval_frequency = 10
+frozen_components = []
+annotating_components = []
+gpu_allocator = "pytorch"
+before_update = null
+before_to_disk = null
+
+[training.optimizer]
+@optimizers = "Adam.v1"
+learn_rate = 0.00005
+L2 = 0.01
+grad_clip = 1.0
+use_averages = true
+beta1 = 0.9
+beta2 = 0.999
+eps = 1e-08
+
+[training.batcher]
+@batchers = "spacy.batch_by_padded.v1"
+discard_oversize = false
+buffer = 512
+
+[training.batcher.size]
+@schedules = "compounding.v1"
+start = 16
+stop = 64
+compound = 1.05
+
+[training.logger]
+@loggers = "spacy.ConsoleLogger.v1"
+progress_bar = true
+
+[training.score_weights]
+ents_f = 1.0
+ents_p = 0.5
+ents_r = 0.5
+
+[initialize]
+vectors = ${paths.vectors}
+init_tok2vec = ${paths.init_tok2vec}
+vocab_data = null
+lookups = null
+tokenizer = {}
+components = {}
+before_init = null
+after_init = null

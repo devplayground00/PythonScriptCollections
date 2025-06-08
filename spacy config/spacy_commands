@@ -1,0 +1,33 @@
+#initialize
+python -m spacy init config config.cfg --lang en --pipeline ner --optimize accuracy --force
+
+#auto fill config
+python -m spacy init fill-config config.cfg config.cfg
+
+#debug data
+python -m spacy debug data config.cfg
+
+#train
+python -m spacy train config.cfg --output ./output
+python -m spacy train config.cfg --output ./output --verbose
+python -m spacy train config.cfg --output ./output --verbose --gpu-id 0
+
+#evaluate model
+python -m spacy evaluate ./output/model-best ./dev.spacy
+
+*if run in google colab add '!'
+for example:
+!python -m spacy train config.cfg --output ./output --verbose --gpu-id 0
+
+*google colab packages
+!pip install -U pip
+!pip install spacy[transformers] -U
+!pip install srsly
+!python -m spacy download en_core_web_trf
+
+*pycharm/ vscode packages
+pip install spacy
+pip install spacy-transformers
+pip install -U scikit-learn
+
+
