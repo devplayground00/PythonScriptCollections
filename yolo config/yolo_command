@@ -1,0 +1,71 @@
+run in google colab *yaml file configuration
+
+train: /content/yolo/images/train
+val: /content/yolo/images/val
+nc: 11
+names:
+  0: Header_Currency
+  1: Header_DeliveryAddress
+  2: Header_PODate
+  3: Header_PONumber
+  4: Header_PaymentTerms
+  5: Item_BPCatalogno
+  6: Item_BPNeedDate
+  7: Item_ItemCode
+  8: Item_LineNo
+  9: Item_Price
+  10: Item_Quantity
+
+run in local *yaml file configuration
+
+path: C:/Users/pc/Desktop/yolo
+train: C:/Users/pc/Desktop/yolo/images/train
+val: C:/Users/pc/Desktop/yolo/images/val
+nc: 11
+names:
+  0: Header_Currency
+  1: Header_DeliveryAddress
+  2: Header_PODate
+  3: Header_PONumber
+  4: Header_PaymentTerms
+  5: Item_BPCatalogno
+  6: Item_BPNeedDate
+  7: Item_ItemCode
+  8: Item_LineNo
+  9: Item_Price
+  10: Item_Quantity
+
+* this is the folder structure before start training
+project/
+├── data.yaml
+├── images/
+│   ├── train/
+│   │   ├── img1.jpg
+│   │   ├── img2.jpg
+│   └── val/
+│       ├── img3.jpg
+│       ├── img4.jpg
+├── labels/
+│   ├── train/
+│   │   ├── img1.txt
+│   │   ├── img2.txt
+│   └── val/
+│       ├── img3.txt
+│       ├── img4.txt
+
+
+yolo detect train model=yolov8m.pt data=C:/Users/pc/Desktop/yolo/data.yaml epochs=50 imgsz=640 patience=5
+
+yolo detect train model=yolov8m.pt data=C:/Users/pc/Desktop/yolo/data.yaml epochs=50 imgsz=960 patience=5
+
+yolo detect train model=yolov8m.pt data=C:/Users/pc/Desktop/yolo/data.yaml epochs=50 imgsz=1280 patience=10 augment=True
+
+yolo detect train model=yolov8s.pt data=C:/Users/pc/Desktop/yolo/data.yaml epochs=50 imgsz=960 patience=5 project="C:/Users/pc/Desktop/yolo/runs" name="train"
+
+| Model     | Size   | Speed      | Accuracy (mAP) | VRAM Use | Use Case                   |
+| --------- | ------ | ---------- | -------------- | -------- | ---------------------------|
+| `yolov8n` | Nano   | 🚀 Fastest | ❌ Lowest      | \~1GB    | For edge devices           |
+| `yolov8s` | Small  | ⚡ Fast     | ✅ Good        | \~2GB    | Balanced for CPU/GPU       |
+| `yolov8m` | Medium | 🐢 Slower  | ✅✅ Better    | \~4GB    | Better accuracy            |
+| `yolov8l` | Large  | 🐢 Slower  | ✅✅✅ High    | \~6GB    | Accuracy-focused           |
+| `yolov8x` | XLarge | 🐢 Slowest | ✅✅✅✅ Best  | \~8–10GB | Best possible accuracy     |
