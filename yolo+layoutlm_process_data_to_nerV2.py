@@ -203,7 +203,7 @@ def generate_layoutlmv3_training_data():
         logging.info(f"✅ valid.json saved: {valid_path} ({len(valid_samples)} samples)")
 
     except Exception as e:
-        logging.error("❌ Failed to generate LayoutLMv3 training data", exc_info=e)
+        logging.error("Failed to generate LayoutLMv3 training data", exc_info=e)
 
 # ---------------- Main Switch ----------------
 def main():
@@ -226,7 +226,7 @@ def main():
         export_to_excel(merged_data, OUTPUT_FILE)
 
     except Exception as e:
-        logging.error("❌ Error during main export logic", exc_info=e)
+        logging.error("Error during main export logic", exc_info=e)
 
 # ---------------- Run ----------------
 if __name__ == "__main__":
