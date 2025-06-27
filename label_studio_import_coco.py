@@ -2,14 +2,26 @@
 # run in powershell
 # pip install label-studio converter
 # label-studio-converter import coco -i "C:\Users\pc\Downloads\project-18-at-2025-06-14-23-47-38908621\result.json" -o "C:\Users\pc\Downloads\project-18-at-2025-06-14-23-47-38908621\result.json"
+"""
+step 1:
+get convert coco format
 
+step 2:
+create project then upload image to label studio project
+
+step 3:
+change the path in the code below to get json file with fixed image path
+
+step 4:
+delete the uploaded image in label studio then upload the fixed json
+"""
 import os
 import json
 
 # Folder and file paths
-folder_path = r"C:\Users\pc\AppData\Local\label-studio\label-studio\media\upload\24"
-json_file_path = r"C:\Users\pc\Downloads\project-18-at-2025-06-14-23-47-38908621\result.json"
-project_id = 24
+folder_path = r"C:\Users\pc\AppData\Local\label-studio\label-studio\media\upload\26"
+json_file_path = r"C:\Users\pc\Desktop\Ichor COCO\result.json"
+project_id = 26
 
 # Allowed image extensions
 image_extensions = {'.jpg', '.jpeg', '.png', '.bmp', '.tiff', '.webp'}

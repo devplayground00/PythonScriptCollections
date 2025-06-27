@@ -1,1 +1,1 @@
-convert_label_studio_NER_json_to_spacy.py
+convert_span_annotated_json_to_token_BIOV2.py

@@ -3,6 +3,19 @@
 # pip install label-studio converter
 # label-studio-converter import coco -i "C:\Users\pc\Downloads\project-18-at-2025-06-14-23-47-38908621\result.json" -o "C:\Users\pc\Downloads\project-18-at-2025-06-14-23-47-38908621\result.json"
 
+"""
+step 1:
+get convert coco format
+
+step 2:
+create project then upload image to label studio project
+
+step 3:
+change the path in the code below to get json file with fixed image path
+
+step 4:
+delete the uploaded image in label studio then upload the fixed json
+"""
 import os
 import json
 
